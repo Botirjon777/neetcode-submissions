@@ -1,0 +1,33 @@
+class Solution {
+    /**
+     * @param {character[][]} board
+     * @return {boolean}
+     */
+    isValidSudoku(board) {
+        const rows = new Map();
+        const cols = new Map();
+        const boxes = new Map();
+
+        for(let row = 0; row < 9; row++){
+            for(let col = 0; col < 9; col++){
+                let val = board[row][col];
+                if(val === ".") continue;
+
+                if(!rows.has(row)) rows.set(row, new Set());
+                if(rows.get(row).has(val)) return false;
+                rows.get(row).add(val);
+
+                if(!cols.has(col)) cols.set(col, new Set());
+                if(cols.get(col).has(val)) return false;
+                cols.get(col).add(val);
+
+                let boxKey = `${Math.floor(row/3)}-${Math.floor(col/3)}`;
+                if(!boxes.has(boxKey)) boxes.set(boxKey, new Set());
+                if(boxes.get(boxKey).has(val)) return false;
+                boxes.get(boxKey).add(val);
+            }
+        }
+
+        return true
+    }
+}
